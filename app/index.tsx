@@ -12,7 +12,12 @@ function TripCard({ title, destination, date, rating }: TripCardProps) {
       <Text> Tytuł: {title}</Text>
       <Text> Kierunek podróży: {destination}</Text>
       <Text> Data: {date}</Text>
-      <Text> Ocena: {rating}</Text>
+      <Text> Ocena:{rating}</Text>
+      {rating === 1 && <Text>★☆☆☆☆</Text>}
+      {rating === 2 && <Text>★★☆☆☆</Text>}
+      {rating === 3 && <Text>★★★☆☆</Text>}
+      {rating === 4 && <Text>★★★★☆</Text>}
+      {rating === 5 && <Text>★★★★★</Text>}
     </View>
   );
 }
@@ -36,7 +41,7 @@ export default function HomeScreen() {
         title="Podróż po Warszawie"
         destination="Warszawa"
         date="14 marca 2025"
-        rating={6}
+        rating={3}
       />
     </ScrollView>
   );
