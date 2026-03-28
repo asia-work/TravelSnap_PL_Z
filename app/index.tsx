@@ -1,37 +1,69 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+
+interface TripCardProps {
+  title: string;
+  destination: string;
+  date: string;
+  rating: number;
+}
+function TripCard({ title, destination, date, rating }: TripCardProps) {
+  return (
+    <View>
+      <Text> Tytuł: {title}</Text>
+      <Text> Kierunek podróży: {destination}</Text>
+      <Text> Data: {date}</Text>
+      <Text> Ocena: {rating}</Text>
+    </View>
+  );
+}
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>TravelSnap</Text>
-      <Text style={styles.subtitle}>Twój dziennik podróży</Text>
-      <Text style={styles.author}>Kajetan Kisielewski</Text>
-    </View>
+    <ScrollView>
+      <TripCard
+        title="Podróż po Wrocławiu"
+        destination="Wrocław"
+        date="20 marca 2025"
+        rating={4}
+      />
+      <TripCard
+        title="Podróż po Kłodzku"
+        destination="Kłodzko"
+        date="28 marca 2025"
+        rating={2}
+      />
+      <TripCard
+        title="Podróż po Warszawie"
+        destination="Warszawa"
+        date="14 marca 2025"
+        rating={6}
+      />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#f5f5f5",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1a1a2e',
+    fontWeight: "bold",
+    color: "#1a1a2e",
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 18,
-    color: '#e94560',
+    color: "#e94560",
     marginBottom: 24,
   },
   author: {
     fontSize: 16,
-    color: '#888',
-    fontStyle: 'italic',
+    color: "#888",
+    fontStyle: "italic",
   },
 });
