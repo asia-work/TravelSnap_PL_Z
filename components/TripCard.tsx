@@ -1,13 +1,14 @@
-import { TripCardProps } from "@/models/TripCardProps";
+import { Trip } from "@/models/Trip";
 import { Text, View } from "react-native";
 import RatingStars from "./RatingStars";
 
 export default function TripCard({
+  id,
   title,
   destination,
   date,
   rating,
-}: TripCardProps) {
+}: Trip) {
   return (
     <View>
       <Text> Tytuł: {title}</Text>
