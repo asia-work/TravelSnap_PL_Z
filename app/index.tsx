@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  View,
 } from "react-native";
 
 export default function HomeScreen() {
@@ -16,15 +17,46 @@ export default function HomeScreen() {
   const [rating, setRating] = useState("");
   //Lista podróży - tablica obiektów Trip
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const handleAddTrip = () => {
-    if (!title.trim() || !destination.trim()) return;
+    setErrorMsg("");
+    if (!title.trim() || !destination.trim()) {
+      setErrorMsg("Musisz uzupełnić tytuł oraz destynację");
+      return;
+    }
+    let ratingTmp: number = Number(rating) || 1;
+
+    if (ratingTmp < 1 || ratingTmp > 5) {
+      setErrorMsg("Rating musi być liczbą pomiędzy 1 a 5");
+      return;
+    }
+    let dateTmp = date.trim();
+    let yearTmp = dateTmp.substring(0, 4);
+    let monthTmp = dateTmp.substring(5, 7);
+
+    let yearVerification = Number(yearTmp) || -1;
+    if (yearVerification === -1) {
+      setErrorMsg("Błędny rok");
+      return;
+    }
+
+    let monthVerification = Number(monthTmp) || -1;
+    if (
+      monthVerification === -1 ||
+      monthVerification < 1 ||
+      monthVerification > 12
+    ) {
+      setErrorMsg("Błędny miesiąc");
+      return;
+    }
+
     const newTrip: Trip = {
       id: Date.now().toString(),
       title: title.trim(),
       destination: destination.trim(),
       date: date.trim() || "Brak Daty",
-      rating: Number(rating) || 1, // string -> number
+      rating: ratingTmp,
     };
     setTrips([...trips, newTrip]);
     setTitle("");
@@ -32,10 +64,16 @@ export default function HomeScreen() {
     setDate("");
     setRating("");
   };
+  const handleUsun = (id: string) => {
+    setTrips(trips.filter((trip) => trip.id !== id));
+  };
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.heading}> TravelSnap</Text>
+      <Text style={styles.heading}>
+        {" "}
+        TravelSnap: Liczba podróży: {trips.length}
+      </Text>
 
       <TextInput
         style={styles.input}
@@ -62,6 +100,9 @@ export default function HomeScreen() {
         onChangeText={setRating}
         keyboardType="numeric"
       />
+      <View>
+        <Text style={{ color: "red" }}>{errorMsg}</Text>
+      </View>
 
       <Pressable style={styles.addBtn} onPress={handleAddTrip}>
         <Text style={styles.addText}>+ Dodaj podróż</Text>
@@ -75,6 +116,7 @@ export default function HomeScreen() {
           destination={trip.destination}
           date={trip.date}
           rating={trip.rating}
+          onUsun={() => handleUsun(trip.id)}
         />
       ))}
     </ScrollView>

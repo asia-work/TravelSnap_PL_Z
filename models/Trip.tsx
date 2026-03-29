@@ -4,4 +4,5 @@ export interface Trip {
   destination: string;
   date: string;
   rating: number;
+  onUsun?: () => void;
 }

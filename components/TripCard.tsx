@@ -1,5 +1,5 @@
 import { Trip } from "@/models/Trip";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import RatingStars from "./RatingStars";
 
 export default function TripCard({
@@ -8,6 +8,7 @@ export default function TripCard({
   destination,
   date,
   rating,
+  onUsun,
 }: Trip) {
   return (
     <View>
@@ -16,6 +17,13 @@ export default function TripCard({
       <Text> Data: {date}</Text>
       <Text> Ocena:{rating}</Text>
       <RatingStars stars={rating} />
+      {onUsun && (
+        <Pressable onPress={onUsun}>
+          <Text style={{ color: "red", marginTop: 8, fontWeight: "bold" }}>
+            Usuń
+          </Text>
+        </Pressable>
+      )}
     </View>
   );
 }
