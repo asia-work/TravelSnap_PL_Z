@@ -1,26 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-
-interface TripCardProps {
-  title: string;
-  destination: string;
-  date: string;
-  rating: number;
-}
-function TripCard({ title, destination, date, rating }: TripCardProps) {
-  return (
-    <View>
-      <Text> Tytuł: {title}</Text>
-      <Text> Kierunek podróży: {destination}</Text>
-      <Text> Data: {date}</Text>
-      <Text> Ocena:{rating}</Text>
-      {rating === 1 && <Text>★☆☆☆☆</Text>}
-      {rating === 2 && <Text>★★☆☆☆</Text>}
-      {rating === 3 && <Text>★★★☆☆</Text>}
-      {rating === 4 && <Text>★★★★☆</Text>}
-      {rating === 5 && <Text>★★★★★</Text>}
-    </View>
-  );
-}
+import TripCard from "@/components/TripCard";
+import { ScrollView } from "react-native";
 
 export default function HomeScreen() {
   return (
@@ -46,29 +25,3 @@ export default function HomeScreen() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#1a1a2e",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: "#e94560",
-    marginBottom: 24,
-  },
-  author: {
-    fontSize: 16,
-    color: "#888",
-    fontStyle: "italic",
-  },
-});
