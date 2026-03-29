@@ -29,7 +29,7 @@ export default function HomeScreen() {
         title="Podróż po Wrocławiu"
         destination="Wrocław"
         date="20 marca 2025"
-        rating={4}
+        rating={1}
       />
       <TripCard
         title="Podróż po Kłodzku"
