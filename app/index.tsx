@@ -1,124 +1,23 @@
+import FormAddTrip from "@/components/FormAddTrip";
 import TripCard from "@/components/TripCard";
 import { Trip } from "@/models/Trip";
 import { useState } from "react";
 import {
-  Pressable,
   ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
+  StyleSheet
 } from "react-native";
 
 export default function HomeScreen() {
-  const [title, setTitle] = useState("");
-  const [destination, setDestination] = useState("");
-  const [date, setDate] = useState("");
-  const [rating, setRating] = useState("");
   //Lista podróży - tablica obiektów Trip
   const [trips, setTrips] = useState<Trip[]>([]);
-  const [errorMsg, setErrorMsg] = useState<string>("");
 
-  const validateTrip = (ratingTmp: number): boolean => {
-    setErrorMsg("");
-    if (!title.trim() || !destination.trim()) {
-      setErrorMsg("Musisz uzupełnić tytuł oraz destynację");
-      return false;
-    }
-
-    if (ratingTmp < 1 || ratingTmp > 5) {
-      setErrorMsg("Rating musi być liczbą pomiędzy 1 a 5");
-      return false;
-    }
-    let dateTmp = date.trim();
-    let yearTmp = dateTmp.substring(0, 4);
-    let monthTmp = dateTmp.substring(5, 7);
-
-    let yearVerification = Number(yearTmp) || -1;
-    if (yearVerification === -1) {
-      setErrorMsg("Błędny rok");
-      return false;
-    }
-
-    let monthVerification = Number(monthTmp) || -1;
-    if (
-      monthVerification === -1 ||
-      monthVerification < 1 ||
-      monthVerification > 12
-    ) {
-      setErrorMsg("Błędny miesiąc");
-      return false;
-    }
-    return true;
-  };
-
-  const resetTempTripStates = () => {
-    setTitle("");
-    setDestination("");
-    setDate("");
-    setRating("");
-  };
-
-  const handleAddTrip = () => {
-    let ratingTmp: number = Number(rating) || 1;
-
-    let validateResult = validateTrip(ratingTmp);
-    if (!validateResult) return;
-
-    const newTrip: Trip = {
-      id: Date.now(),
-      title: title.trim(),
-      destination: destination.trim(),
-      date: date.trim() || "Brak Daty",
-      rating: ratingTmp,
-    };
-    setTrips([...trips, newTrip]);
-
-    resetTempTripStates();
-  };
-  const handleUsun = (id: number) => {
+  const handleDelete = (id: number) => {
     setTrips(trips.filter((trip) => trip.id !== id));
   };
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.heading}>
-        {" "}
-        TravelSnap: Liczba podróży: {trips.length}
-      </Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Tytuł podróży..."
-        value={title}
-        onChangeText={setTitle}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Destynacja..."
-        value={destination}
-        onChangeText={setDestination}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Data (e.g. 2024-07)..."
-        value={date}
-        onChangeText={setDate}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Ocena (1-5)..."
-        value={rating}
-        onChangeText={setRating}
-        keyboardType="numeric"
-      />
-      <View>
-        <Text style={{ color: "red" }}>{errorMsg}</Text>
-      </View>
-
-      <Pressable style={styles.addBtn} onPress={handleAddTrip}>
-        <Text style={styles.addText}>+ Dodaj podróż</Text>
-      </Pressable>
+      <FormAddTrip trips={trips} setTrips={setTrips} />
 
       {trips.map((trip) => (
         <TripCard
@@ -128,7 +27,7 @@ export default function HomeScreen() {
           destination={trip.destination}
           date={trip.date}
           rating={trip.rating}
-          onUsun={() => handleUsun(trip.id)}
+          onUsun={() => handleDelete(trip.id)}
         />
       ))}
     </ScrollView>
