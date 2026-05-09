@@ -19,17 +19,16 @@ export default function HomeScreen() {
   const [trips, setTrips] = useState<Trip[]>([]);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  const handleAddTrip = () => {
+  const validateTrip = (ratingTmp: number): boolean => {
     setErrorMsg("");
     if (!title.trim() || !destination.trim()) {
       setErrorMsg("Musisz uzupełnić tytuł oraz destynację");
-      return;
+      return false;
     }
-    let ratingTmp: number = Number(rating) || 1;
 
     if (ratingTmp < 1 || ratingTmp > 5) {
       setErrorMsg("Rating musi być liczbą pomiędzy 1 a 5");
-      return;
+      return false;
     }
     let dateTmp = date.trim();
     let yearTmp = dateTmp.substring(0, 4);
@@ -38,7 +37,7 @@ export default function HomeScreen() {
     let yearVerification = Number(yearTmp) || -1;
     if (yearVerification === -1) {
       setErrorMsg("Błędny rok");
-      return;
+      return false;
     }
 
     let monthVerification = Number(monthTmp) || -1;
@@ -48,8 +47,23 @@ export default function HomeScreen() {
       monthVerification > 12
     ) {
       setErrorMsg("Błędny miesiąc");
-      return;
+      return false;
     }
+    return true;
+  };
+
+  const resetTempTripStates = () => {
+    setTitle("");
+    setDestination("");
+    setDate("");
+    setRating("");
+  };
+
+  const handleAddTrip = () => {
+    let ratingTmp: number = Number(rating) || 1;
+
+    let validateResult = validateTrip(ratingTmp);
+    if (!validateResult) return;
 
     const newTrip: Trip = {
       id: Date.now(),
@@ -59,10 +73,8 @@ export default function HomeScreen() {
       rating: ratingTmp,
     };
     setTrips([...trips, newTrip]);
-    setTitle("");
-    setDestination("");
-    setDate("");
-    setRating("");
+
+    resetTempTripStates();
   };
   const handleUsun = (id: number) => {
     setTrips(trips.filter((trip) => trip.id !== id));
