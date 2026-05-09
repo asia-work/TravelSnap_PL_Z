@@ -1,6 +1,6 @@
-import { TripCardProps } from "@/models/TripCardProps";
+import { Trip } from "@/models/Trip";
 
-export const DaneTripCard: TripCardProps[] = [
+export const InfoTripCard: Trip[] = [
   {
     id: 1,
     title: "Podróż po Wrocławiu",

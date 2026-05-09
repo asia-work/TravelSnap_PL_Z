@@ -52,7 +52,7 @@ export default function HomeScreen() {
     }
 
     const newTrip: Trip = {
-      id: Date.now().toString(),
+      id: Date.now(),
       title: title.trim(),
       destination: destination.trim(),
       date: date.trim() || "Brak Daty",
@@ -64,7 +64,7 @@ export default function HomeScreen() {
     setDate("");
     setRating("");
   };
-  const handleUsun = (id: string) => {
+  const handleUsun = (id: number) => {
     setTrips(trips.filter((trip) => trip.id !== id));
   };
 
