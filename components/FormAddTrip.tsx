@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import { Trip } from "@/models/Trip";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
@@ -118,7 +119,7 @@ const stylesFormAddTrip = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#F0F4F8",
+    backgroundColor: Colors.card,
   },
   heading: {
     fontSize: 28,
@@ -128,17 +129,18 @@ const stylesFormAddTrip = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#CED4DA",
+    borderColor: Colors.inputBorder,
+    color: "white",
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: "#FFF",
+    backgroundColor: Colors.inputBg,
     marginBottom: 8,
   },
   addBtn: {
-    backgroundColor: "#61DAFB",
+    backgroundColor: Colors.accent,
     padding: 14,
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: "center",
     marginTop: 4,
     marginBottom: 16,
@@ -146,6 +148,6 @@ const stylesFormAddTrip = StyleSheet.create({
   addText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#0A1628",
+    color: "white",
   },
 });
